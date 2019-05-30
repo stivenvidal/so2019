@@ -1,5 +1,5 @@
 # Respositorio Sistemas Operativos 2019
-## Autor: John Sanabria - estudiante de Ingeniería XXX
+## Autor: Stiven Vidal - estudiante de Ingeniería electrónica
 
 En este repositorio se almacenarán todos los códigos resultado de desarrollar las actividades en el curso de Sistemas Operativos. 
 
