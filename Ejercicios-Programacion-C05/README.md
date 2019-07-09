@@ -1,5 +1,5 @@
-#Capítulo 5:
-##Punto 1:
+#Capítulo 5
+##Punto 1
 
 Al correr el programa [fork_1_a.c](fork_1_a.c) podemos observar que el valor de la.
 variable en el proceso hijo tiene el mismo valor que el proceso padre, esto es por que.
