@@ -1,4 +1,4 @@
-
+#include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
 #include <assert.h>
@@ -13,18 +13,19 @@ long int valor;
 int main(int argc, char *argv[]) {
     int fd = open("texto1.txt", O_WRONLY | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
     assert(fd >= 0);
-    close(fd);
-
+    char cero[5] = "0";
+    int rc = write(fd, cero, 1);
+    assert(rc == 1);
+    close (fd);
 
     printf("Numero de veces que desea modificar la variable: ");
     scanf("%ld",&valor);
-    int rc;
 
     pid_t pid;
 
     pid = fork();
 
-    char buffer[40];
+    char buffer[valor];
 
     if (pid > 0){
 
@@ -32,17 +33,23 @@ int main(int argc, char *argv[]) {
       for(i=0; i<valor; i++){
 //	sprintf (buffer, "%ld\n",variable);
 
-	char numero [valor];
-        int fd = open("texto1.txt", O_RDONLY);
-	lseek (fd,0,SEEK_SET);
-        read (fd, numero, valor);
-	close (fd);
-	int variable = numero
+        char tvalor[(valor/2)];
+	sprintf(tvalor,"%ld",valor);
+//printf ("tamaño del valor %ld\n",strlen(tvalor));
+	char numero [strlen(tvalor)];
+        int leer = open("texto1.txt", O_RDONLY);
+	lseek (leer,0,SEEK_SET);
+        read (leer, numero, (strlen(tvalor)));
+//printf ("valor leido---%s\n",numero);
+	close (leer);
+	variable = atoi(numero) + 1;
+//printf ("%ld\n", variable);
 
-	int fd = open("texto1.txt", O_WRONLY| O_TRUNC);
-        lseek (fd, 0, SEEK_END);
+	fd = open("texto1.txt", O_WRONLY| O_TRUNC);
+        lseek (fd, 0, SEEK_SET);
+	sprintf (buffer, "%ld",variable);
 
-        int rc = write(fd, buffer, strlen(buffer));
+        rc = write(fd, buffer, strlen(buffer));
         assert(rc == (strlen(buffer)));
 	close (fd);
 
@@ -52,17 +59,30 @@ int main(int argc, char *argv[]) {
 
       int i;
       for(i=0; i<valor; i++){
-	variable++;
-        sprintf (buffer, "%ld\n",variable);
+//      sprintf (buffer, "%ld\n",variable);
 
-        int fd = open("texto1.txt", O_WRONLY);
-        lseek (fd, 0, SEEK_END);
+        char tvalor[(valor/2)];
+        sprintf(tvalor,"%ld",valor);
+//printf ("tamaño del valor %ld\n",strlen(tvalor));
+        char numero [strlen(tvalor)];
+        int leer = open("texto1.txt", O_RDONLY);
+        lseek (leer,0,SEEK_SET);
+        read (leer, numero, (strlen(tvalor)));
+//printf ("valor leido---%s\n",numero);
+        close (leer);
+        variable = atoi(numero) + 1;
+//printf ("%ld\n", variable);
 
-        int rc = write(fd, buffer, strlen(buffer));
+        fd = open("texto1.txt", O_WRONLY| O_TRUNC);
+        lseek (fd, 0, SEEK_SET);
+        sprintf (buffer, "%ld",variable);
+
+        rc = write(fd, buffer, strlen(buffer));
         assert(rc == (strlen(buffer)));
         close (fd);
 
       }
+
 
     }else{
       printf("Error al crear el fork");
@@ -70,7 +90,7 @@ int main(int argc, char *argv[]) {
     }
 
     fsync(fd);
-//    close(fd);
+
     return 0;
 }
 

@@ -21,12 +21,10 @@ int main(int argc, char *argv[]) {
     if (pid > 0){
       sprintf(buffer, "Escribiendo desde el padre\n");
 
-      }
 
     }else if(pid == 0){
       sprintf(buffer, "Escribiendo desde el hijo\n");
 
-      }
 
     }else{
       printf("Error al crear el fork");
