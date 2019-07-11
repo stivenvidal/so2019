@@ -16,12 +16,15 @@ int main(int argc, char *argv[]){
   execv ("/bin/ls",argumentos);
 
   }else{
-//    while (wait (&status) != pid);
-//    if (status ==  0){
-//      printf ("ejecucion normal del hijo\n");
-//    }else{
-//      printf("error del hijo\n");
-    printf ("padre terminado\n");
+    waitpid (pid,&status,0);
+
+    if ((WIFEXITED(status)) != 0){
+      printf ("Ejecucion normal del hijo\n");
+    }else{
+      printf("Error en la ejecucion del hijo\n");
+    }
+
+    printf("Padre terminado.\n");
   }
 
 

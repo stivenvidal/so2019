@@ -13,15 +13,21 @@ int main(int argc, char *argv[]){
   printf ("fallo al crear el fork\n");
 
   }else if (pid == 0){
+  while (wait (&status) != pid);
+
   execv ("/bin/ls",argumentos);
 
   }else{
-//    while (wait (&status) != pid);
-//    if (status ==  0){
-//      printf ("ejecucion normal del hijo\n");
-//    }else{
-//      printf("error del hijo\n");
-    printf ("padre terminado\n");
+   // while (wait (&status) != pid);
+
+    if (status ==  0){
+
+      printf ("ejecucion normal del hijo\n");
+    }else{
+      printf("error del hijo\n");
+    }
+
+    printf("Padre terminado.\n");
   }
 
 
